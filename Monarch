@@ -1,0 +1,38 @@
+local RS = game:GetService("ReplicatedStorage")
+local Buy = RS:WaitForChild("BuySeedRequest")
+
+local Rayfield = loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
+
+local Window = Rayfield:CreateWindow({
+	Name = "🍄 Mushroom Shop",
+	LoadingTitle = "Mushroom Shop",
+	KeySystem = false,
+	ConfigurationSaving = {Enabled = false}
+})
+
+local Tab = Window:CreateTab("🛒 ร้านค้า")
+
+local function BuySeed(name, amount)
+	Tab:CreateButton({
+		Name = "ซื้อ "..name.." x"..amount,
+		Callback = function()
+			Buy:FireServer(name, amount)
+			Rayfield:Notify({
+				Title = "ซื้อสำเร็จ",
+				Content = name.." x"..amount,
+				Duration = 3
+			})
+		end
+	})
+end
+
+BuySeed("Brown Mushroom Seed",10)
+BuySeed("Chestnut Cap Seed",125)
+
+Tab:CreateLabel("เลือกเมล็ดเพื่อซื้อ")
+
+Rayfield:Notify({
+	Title="เปิด UI สำเร็จ",
+	Content="Mushroom Shop พร้อมใช้",
+	Duration=3
+})
